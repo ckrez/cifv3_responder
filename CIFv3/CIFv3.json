@@ -1,0 +1,51 @@
+{
+  "name": "CIFv3",
+  "version": "1.0",
+  "author": "Calvin Krzywiec",
+  "url": "https://github.com/ckrez/cifv3_responder",
+  "license": "AGPL-V3",
+  "description": "Submit indicators to a CIFv3 server",
+  "dataTypeList": ["thehive:alert","thehive:case_artifact"],
+  "command": "CIFv3/CIFv3.py",
+  "baseConfig": "CIFv3",
+  "configurationItems": [
+    {
+      "name": "remote",
+      "description": "CIF API URL",
+      "type": "string",
+      "multi": false,
+      "required": true
+    },
+    {
+      "name": "token",
+      "description": "CIF API Token",
+      "type": "string",
+      "multi": false,
+      "required": true
+    },
+    {
+      "name": "verify_ssl",
+      "description": "Verify TLS certificate when connecting to CIF",
+      "type": "boolean",
+      "multi": false,
+      "required": true,
+      "defaultValue": true
+    },
+    {
+      "name": "confidence",
+      "description": "Default indicator confidence",
+      "type": "number",
+      "multi": false,
+      "required": true,
+      "defaultValue": 5
+    },
+    {
+      "name": "group",
+      "description": "CIF Group Name (optional)",
+      "type": "string",
+      "multi": false,
+      "required": true,
+      "defaultValue": "everyone"
+    }
+  ]
+}
