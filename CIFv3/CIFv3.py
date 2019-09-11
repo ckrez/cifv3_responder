@@ -56,13 +56,17 @@ class CIFv3(Responder):
             # map TLP to word
             tlp = self.TLP_MAP[int(i['tlp'])]
 
-            # confidence tag check
+            # process tags
             tags = i['tags']
-            for t in tags:
+            for t in list(tags):
+                # confidence tag check
                 if 'confidence:' in t:
                     tags.remove(t)
                     (k, v) = t.split(':')
                     confidence = int(v)
+                # remove other directive tags
+                elif ':' in t:
+                    tags.remove(t)
 
             # set to default confidence if not defined
             if not confidence:
