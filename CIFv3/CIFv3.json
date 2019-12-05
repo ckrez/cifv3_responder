@@ -46,6 +46,13 @@
       "multi": false,
       "required": true,
       "defaultValue": "everyone"
+    },
+    {
+      "name": "tlp_map",
+      "description": "JSON object to map TheHive TLP to a custom value",
+      "type": "string",
+      "multi": false,
+      "required": false
     }
   ]
 }
