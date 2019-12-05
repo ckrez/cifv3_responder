@@ -6,6 +6,7 @@ from cifsdk.client.http import HTTP as Client
 from csirtg_indicator import Indicator
 from csirtg_indicator.exceptions import InvalidIndicator
 from datetime import datetime
+import json
 
 class CIFv3(Responder):
 
@@ -16,13 +17,22 @@ class CIFv3(Responder):
         self.d_confidence = self.get_param('config.confidence')
         self.verify_ssl = self.get_param('config.verify_ssl')
         self.group = self.get_param('config.group')
+        self.custom_tlp_map = self.get_param('config.tlp_map')
 
         self.TLP_MAP = {
-            0: 'WHITE',
-            1: 'GREEN',
-            2: 'AMBER',
-            3: 'RED'
+            "0": 'WHITE',
+            "1": 'GREEN',
+            "2": 'AMBER',
+            "3": 'RED'
         }
+
+        # load in custom tlp map
+        if self.custom_tlp_map and self.custom_tlp_map != '':
+            try:
+                self.TLP_MAP.update(json.loads(self.custom_tlp_map))
+            except Exception as e:
+                self.error("Error loading tlp map: {}".format(e))
+
 
     def run(self):
         Responder.run(self)
@@ -54,7 +64,7 @@ class CIFv3(Responder):
         for i in indicators:
 
             # map TLP to word
-            tlp = self.TLP_MAP[int(i['tlp'])]
+            tlp = self.TLP_MAP[str(i['tlp'])]
 
             # process tags
             tags = i['tags']
